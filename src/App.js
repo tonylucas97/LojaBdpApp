@@ -3,7 +3,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
-import Login from "./Login/Login"
+import TabNavigationLogin from "./TabNavigationLogin/TabnavigationLogin"
 
 export default function App() {
   return (
@@ -12,7 +12,7 @@ export default function App() {
         <Stack.Navigator screenOptions={{
           headerShown: false
         }}>
-          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="TabNavigationLogin" component={TabNavigationLogin} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

@@ -18,7 +18,7 @@ export default function Login({ navigation }) {
                     </View>
                     <View style={{ flexDirection: "row", flexWrap: "nowrap", justifyContent: "space-between", alignItems: "center" }}>
                         <Text style={{ fontFamily: "Montserrat-Regular", marginTop: 20, }}>Esqueceu a senha ?</Text>
-                        <TouchableOpacity onPress={() => console.log("asdasdas")} activeOpacity={0.8}><Text style={{ marginTop: 20, borderRadius: 4, paddingRight: 25, paddingLeft: 25, paddingTop: 15, paddingBottom: 15, backgroundColor: "#F18B31", color: "white", fontSize: 16, fontFamily: "Montserrat-Regular" }}>
+                        <TouchableOpacity onPress={() => navigation.navigate("LogedNavigation")} activeOpacity={0.8}><Text style={{ marginTop: 20, borderRadius: 4, paddingRight: 25, paddingLeft: 25, paddingTop: 15, paddingBottom: 15, backgroundColor: "#F18B31", color: "white", fontSize: 16, fontFamily: "Montserrat-Regular" }}>
                             <Svg
                                 width={24}
                                 height={24}

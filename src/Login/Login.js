@@ -4,7 +4,24 @@ import Svg, { Path } from "react-native-svg"
 
 export default function Login({ navigation }) {
 
-    const [isActive,setIsActive] = useState(true)
+    const [isActive, setIsActive] = useState(true)
+    const [email, setEmail] = useState()
+    const [senha, setSenha] = useState()
+
+    const doLogin = async () => {
+        if (email && senha) {
+            console.log(email, senha)
+            const result = await fetch("https://apibaldosplasticos.herokuapp.com/login/userauth", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: email, senha: senha })
+            })
+            const json = await result.json();
+            console.log(json)
+        }
+    }
 
     return (
         <React.Fragment>
@@ -13,12 +30,12 @@ export default function Login({ navigation }) {
                     <Text style={{ fontFamily: "Montserrat-Black", color: "#1C6879", fontSize: 25.5 }}>Faça Login</Text>
                     <Text style={{ fontFamily: "Montserrat-Light", color: "black", fontSize: 19, marginTop: 10 }}>Na sua Conta</Text>
                     <View style={{ flexDirection: "column", width: "100%" }}>
-                        <TextInput style={{ backgroundColor: "#F5F5F5", borderRadius: 4, marginTop: 23, paddingLeft: 20 }} placeholder="Email" />
-                        <TextInput style={{ backgroundColor: "#F5F5F5", borderRadius: 4, marginTop: 23, paddingLeft: 20 }} placeholder="Senha" />
+                        <TextInput style={{ backgroundColor: "#F5F5F5", borderRadius: 4, marginTop: 23, paddingLeft: 20 }} placeholder="Email" onChangeText={text => setEmail(text)} />
+                        <TextInput secureTextEntry={true} style={{ backgroundColor: "#F5F5F5", borderRadius: 4, marginTop: 23, paddingLeft: 20 }} placeholder="Senha" onChangeText={text => setSenha(text)} />
                     </View>
                     <View style={{ flexDirection: "row", flexWrap: "nowrap", justifyContent: "space-between", alignItems: "center" }}>
                         <Text style={{ fontFamily: "Montserrat-Regular", marginTop: 20, }}>Esqueceu a senha ?</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate("LogedNavigation")} activeOpacity={0.8}><Text style={{ marginTop: 20, borderRadius: 4, paddingRight: 25, paddingLeft: 25, paddingTop: 15, paddingBottom: 15, backgroundColor: "#F18B31", color: "white", fontSize: 16, fontFamily: "Montserrat-Regular" }}>
+                        <TouchableOpacity onPress={() => doLogin()} activeOpacity={0.8}><Text style={{ marginTop: 20, borderRadius: 4, paddingRight: 25, paddingLeft: 25, paddingTop: 15, paddingBottom: 15, backgroundColor: "#F18B31", color: "white", fontSize: 16, fontFamily: "Montserrat-Regular" }}>
                             <Svg
                                 width={24}
                                 height={24}

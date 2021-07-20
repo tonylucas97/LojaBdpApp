@@ -4,6 +4,8 @@ import { TextInput } from "react-native-gesture-handler";
 import Svg, { Path } from "react-native-svg"
 import * as Animatable from 'react-native-animatable';
 import { ActivityIndicator, Colors } from 'react-native-paper';
+import SuccessMessage from "../utils/SuccessMessage";
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function TabNavigationLogin({ navigation }) {
 
@@ -13,9 +15,20 @@ export default function TabNavigationLogin({ navigation }) {
     const [confirmaSenha, setConfirmaSenha] = useState()
     const [isErro, setIsErro] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
+    const [finished,setFinished] = useState(false)
+
+    useFocusEffect(
+        React.useCallback(() => {
+          // Do something when the screen is focused
+    
+          return () => {
+            
+          };
+        }, [])
+      );
 
     const register = async () => {
-        setIsLoading(false);
+        
         setIsLoading(true)
         if (email && senha && nome && confirmaSenha) {
             const result = await fetch("https://apibaldosplasticos.herokuapp.com/usuario/cadastro", {
@@ -24,18 +37,17 @@ export default function TabNavigationLogin({ navigation }) {
                 body: JSON.stringify({ email: email, senha: confirmaSenha, nome: nome })
             });
             const json = await result.json();
-            if (json.success) {
+            if(json.success){
                 navigation.navigate("Login")
             }
-            setIsLoading(false);
         } else {
-            setIsLoading(false);
             setIsErro(false);
             setIsErro(true);
             setTimeout(() => {
                 setIsErro(false);
             }, 3000)
         }
+        setIsLoading(false);
     }
 
     return (
@@ -69,7 +81,7 @@ export default function TabNavigationLogin({ navigation }) {
             </View>
             {isErro && (
 
-                <View style={{ flexDirection: "row", position: "absolute", bottom: 17, width: "100%", justifyContent: "center", alignItems: "center", marginBottom: 30 }}>
+                <View style={{ flexDirection: "row", position: "absolute", bottom: -9, width: "100%", justifyContent: "center", alignItems: "center", marginBottom: 30 }}>
 
                     <Animatable.View animation="bounceInRight" style={{ borderRadius: 7, backgroundColor: "#FED045", paddingTop: 10, paddingBottom: 10, paddingLeft: 18, paddingRight: 18, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                         <Svg
@@ -94,6 +106,7 @@ export default function TabNavigationLogin({ navigation }) {
                 </View>
 
             )}
+            
         </React.Fragment>
     )
 }

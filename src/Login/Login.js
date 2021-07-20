@@ -1,16 +1,19 @@
 import React, { useState } from "react"
 import { Text, View, TextInput, TouchableOpacity } from "react-native"
 import Svg, { Path } from "react-native-svg"
+import { useFocusEffect } from '@react-navigation/native';
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
-export default function Login({ navigation }) {
+export default function Login({ navigation, route }) {
 
     const [isActive, setIsActive] = useState(true)
     const [email, setEmail] = useState()
     const [senha, setSenha] = useState()
+    const [isRegisted, setIsRegisted] = useState(false);
 
     const doLogin = async () => {
         if (email && senha) {
-            console.log(email, senha)
+            
             const result = await fetch("https://apibaldosplasticos.herokuapp.com/login/userauth", {
                 method: "POST",
                 headers: {
@@ -20,6 +23,11 @@ export default function Login({ navigation }) {
             })
             const json = await result.json();
             console.log(json)
+            if(json.success){
+                AsyncStorage.setItem("userToken",json.token)
+                AsyncStorage.setItem("usuario",json.usuario)
+                navigation.navigate("LogedNavigation")
+            }
         }
     }
 
